@@ -57,6 +57,11 @@ ESTJourTravaille = False
 ElseIf Day(dJour) = (ESTJourAscencion(dJour)) Then
 ESTJourTravaille = False
 
+ElseIf Day(dJour) = (ESTLundiDePentecote(dJour)) Then
+ESTJourTravaille = False
+
+Else
+ESTJourTravaille = True
 
 End If
 
