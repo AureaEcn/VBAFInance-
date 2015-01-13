@@ -1,7 +1,7 @@
 Attribute VB_Name = "Ajustement"
 Option Explicit
 
-Function AjusteDate(dJour As Date) As Date
+Function AjusteDate(dJour As Date, ModeAjustement) As Date
 
 'Déclaration des variables
  Dim Date_a As Double
