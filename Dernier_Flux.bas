@@ -8,7 +8,7 @@ Dim dblDateFlux As Double
 
 'Algorithme
 
-If dDateDeDeart > DateDeCalcul Then 'Forward
+If DateDeDepart > dDateDeCalcul Then 'Forward
     dblDateFlux = 0
 Else
     dblDateFlux = DatesDesFlux(dDateDeCalcul, dDateMaturite, Frequence, ModeAjustement, TypeCouponBrise, DateDeDepart)(0)

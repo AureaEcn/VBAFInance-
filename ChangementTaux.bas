@@ -1,6 +1,6 @@
 Attribute VB_Name = "ChangementTaux"
 Option Explicit
-Base 1
+Option Base 1
 
 Function ChangeTaux(dDateDeCalcul As Date, dDateMaturite As Date, dblDonnee As Double, iTypeDonnee As Integer, iFrequence As Integer, iBase As Integer, iFrequenceCible As Integer, iTypeDonneeCible As Integer, iBaseCible As Integer) As Double
 
@@ -14,7 +14,7 @@ Dim dblF1 As Double
 Dim dblF2 As Double
 
 dblF1 = FractionAnnee(dDateDeCalcul, dDateMaturite, iBase)
-dblF2 = FractionAnnee(dDateDealcul, dDateMaturite, iBeCible)
+dblF2 = FractionAnnee(dDateDeCalcul, dDateMaturite, iBaseCible)
 
 'Angorithme
 'Conversion de la donnée initiale en facteur d'actualisation
@@ -48,11 +48,11 @@ Select Case iTypeDonneeCible
     Case 1 'on veut passer en taux composé
     dblValRet = (((1 / dblFA) ^ (1 / (iFrequenceCible * dblF2))) - 1) * iFrequenceCible
     
-    Case2 'on veut un taux d'actualisation
+    Case 2 'on veut un taux d'actualisation
     dblValRet = dblFA
     
-    Case3 'on veut un taux continu
-    dblValRet = (Log(1 / dbFA)) / dblF2
+    Case 3 'on veut un taux continu
+    dblValRet = (Log(1 / dblFA)) / dblF2
     
 End Select
 
@@ -60,10 +60,5 @@ ChangeTaux = dblValRet
 
 End Function
     
-
-
-
-
-End Function
 
 
