@@ -1,7 +1,7 @@
 Attribute VB_Name = "DatesFlux"
 Option Explicit
 
-Function DatesDesFlux(dDateDeCalcul As Date, dDateMaturite As Date, iFrequence As Integer, Optional TypeCouponBrise = 0, Optional dDateDeDepart = 0, Optional ModeAjustement = 0)
+Function DatesDesFlux(dDateDeCalcul As Date, dDateMaturite As Date, iFrequence As Integer, dDateDeDepart As Date, Optional TypeCouponBrise = 0, Optional ModeAjustement = 1)
 
 'La fonction renvoie un tableau comprenant les dates des coupons d'un instrument
 
@@ -18,8 +18,9 @@ Dim iPeriodeCoupon As Integer
 'Initialisation
 
 If dDateDeDepart > dDateMaturite Or dDateDeCalcul > dDateMaturite Or dDateDeCalcul = 0 Or dDateMaturite = 0 Then ' Cas impossibles
+    MsgBox ("Cas impossibles")
     ReDim TableauRetour(0)
-    TableauRetour(0) = 0
+    TableauRetour(0) = 1
     DatesDesFlux = TableauRetour
     Exit Function
 End If
@@ -27,21 +28,36 @@ End If
 'Cas du zero coupon
 
 If iFrequence = 0 Then
+    MsgBox ("Zero coupon")
+    MsgBox dDateDeDepart
+    MsgBox dDateDeCalcul
     If dDateDeDepart > dDateDeCalcul Then 'Forward
-        ReDim TableauRetour(0 To 1)
-        TableauRetour(0) = AjusteDate((dDateDeDepart), ModeAjustement)
-        TableauRetour(1) = AjusteDate((dDateMaturite), ModeAjustement)
-        Else 'Ce n'est pas un forward
-        ReDim TableauRetour(1)
-        TableauRetour(1) = AjusteDate((dDateMaturite), ModeAjustement)
-    End If
     
-DatesDesFlux = TableauRetour
+        MsgBox ("Zero coupon forward")
+        ReDim TableauRetour(0 To 1)
+        TableauRetour(0) = AjusteDate(dDateDeDepart, ModeAjustement)
+        TableauRetour(1) = AjusteDate(dDateMaturite, ModeAjustement)
+        DatesDesFlux = TableauRetour
+        Exit Function
+        
+        Else 'Ce n'est pas un forward
+        MsgBox ("Zero coupon non forward")
+        ReDim TableauRetour(0)
+        TableauRetour(0) = AjusteDate(dDateMaturite, ModeAjustement)
+        DatesDesFlux = TableauRetour
+        Exit Function
+        
+End If
+End If
+
+    
+   
 
 'Autres cas
 'iPeriodeCoupon est le nombre de mois entre deux coupons
 iPeriodeCoupon = 12 / iFrequence
 ReDim TableauTemporaire(0)
+
 '======================================================================================================================================
 'Calcul de l'echeancier
 '======================================================================================================================================
@@ -72,6 +88,7 @@ Select Case TypeCouponBrise
         TableauTemporaire(UBound(TableauTemporaire)) = DateOffset(Year(dblDerniere), Month(dblDerniere), Day(dblDerniere), -iPeriodeCoupon)
         dblDerniere = TableauTemporaire(UBound(TableauTemporaire))
     Wend
+    
     End Select
     
     Select Case TypeCouponBrise
@@ -167,577 +184,8 @@ For i = 0 To UBound(TableauRetour)
     
     DatesDesFlux = TableauRetour
    
-End If
+
 
     
 End Function
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-
-
-
 
